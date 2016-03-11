@@ -6,6 +6,7 @@ require 'yaml'
 describe YAML do
   let(:yaml) { YAML.load_file(File.dirname(__FILE__) + "/test.yaml") }
   let(:root) { yaml["root"] }
+  let(:test_file_path) { File.dirname(__FILE__) + "/serialize.yaml" }
   
   it "ファイルを読み込む" do
     yaml
@@ -66,5 +67,24 @@ describe YAML do
     hash = root["test_time_stamp"]
     expect(hash["ts1"]).to eq Time.local(2016, 2, 28, 23, 0, 0)
   end
+
+  it "シリアライズとデシリアライズ" do
+    obj1 = Hoge.new("foo", [1, 2, 3], {x: 7, y: 8, z: 9})
+    File.open(test_file_path, "w+") { |f| f.write(obj1.to_yaml) }
+    obj2 = YAML.load_stream(File.new(test_file_path)).first
+    expect(obj1.a).to eq obj2.a
+    expect(obj1.b).to eq obj2.b
+    expect(obj1.c).to eq obj2.c
+    expect(obj1.class).to eq obj2.class
+  end
   
+end
+
+class Hoge
+  attr_reader :a, :b, :c
+  def initialize(a, b, c)
+    @a = a
+    @b = b
+    @c = c
+  end
 end

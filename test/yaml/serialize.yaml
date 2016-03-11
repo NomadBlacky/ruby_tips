@@ -1,0 +1,10 @@
+--- !ruby/object:Hoge
+a: foo
+b:
+- 1
+- 2
+- 3
+c:
+  :x: 7
+  :y: 8
+  :z: 9
