@@ -2,6 +2,7 @@
 
 ## 言語仕様
 + [ロードパス](https://github.com/NomadBlacky/ruby_tips/blob/master/note/load_path.md)
++ [Array/Enumerable](https://github.com/NomadBlacky/ruby_tips/blob/master/test/array/array_rspec.rb)
 
 ## ライブラリ
 + [yaml](https://github.com/NomadBlacky/ruby_tips/blob/master/test/yaml/yaml_rspec.rb)
