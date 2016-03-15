@@ -3,24 +3,30 @@
 
 describe Array do
 
-  let(:int_array) { (-5..5).to_a }
-  let(:str_array) { ('a'..'zz').to_a }
-
   example "find : 最初に見つかったものを返す" do
-    num = int_array.find(&:zero?)
+    num = [0, 1, 2].find(&:zero?)
     expect(num).to eq 0
   end
 
   example "select : 条件に合うものを全て返す" do
-    str_z = str_array.select{ |s| s.match(/^z+$/) }
-    expect(str_z).to eq ['z', 'zz']
+    array = ['a','b','c','x','y','z',].select{ |s| s.match(/^x|y|z$/) }
+    expect(array).to eq ['x', 'y', 'z']
   end
 
-  example "count : 条件に合う要素の数を返す"
+  example "count : 条件に合う要素の数を返す" do
+    count = [-1, 0, 1].count(&:zero?)
+    expect(count).to eq 1
+  end
 
-  example "map : ある配列から別の配列を作る"
+  example "map : ある配列から別の配列を作る" do
+    upcases = ['a', 'b', 'c'].map(&:upcase)
+    expect(upcases).to eq ['A', 'B', 'C']
+  end
 
-  example "flat_map : mapの結果をネストしないフラットな配列として受け取る"
+  example "flat_map : mapの結果をネストしないフラットな配列として受け取る" do
+    array = [1, 2, 3].flat_map{ |num| [num, num * 10] }
+    expect(array).to eq [1, 10, 2, 20, 3, 30]
+  end
 
   example "compact : nil以外の要素を返す"
 
