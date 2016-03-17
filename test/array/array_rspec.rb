@@ -28,30 +28,72 @@ describe Array do
     expect(array).to eq [1, 10, 2, 20, 3, 30]
   end
 
-  example "compact : nil以外の要素を返す"
+  example "compact : nil以外の要素を返す" do
+    array = [1, nil, 2, 3, nil].compact
+    expect(array).to eq [1, 2, 3]
+  end
 
-  example "any? : 1つでも条件に合う要素があればtrueを返す"
+  example "any? : 1つでも条件に合う要素があればtrueを返す" do
+    array1 = ["a", "bb", "c"].any?{ |str| 2 <= str.length }
+    expect(array1).to be_truthy
 
-  example "all? : 全ての要素が条件に合っていればtrueを返す"
+    array2 = [1, 2, 3].any?(&:nil?)
+    expect(array2).to be_falsey
+  end
 
-  example "empty? : 1件も無ければtrueを返す"
+  example "all? : 全ての要素が条件に合っていればtrueを返す" do
+    array1 = ["a", "bb", "c"].all?{ |str| 2 <= str.length }
+    expect(array1).to be_falsey
 
-  example "first : 最初の要素を返す"
+    array2 = [nil, nil, nil].all?(&:nil?)
+    expect(array2).to be_truthy
+  end
 
-  example "last : 最後の要素を返す"
+  example "empty? : 1件も無ければtrueを返す" do
+    expect([].empty?).to be_truthy
+    expect(["hoge"].empty?).to be_falsey
+  end
 
-  example "sample : 任意の要素を返す"
+  example "first : 最初の要素を返す" do
+    expect([1, 2, 3].first).to eq 1
+  end
 
-  example "wexampleh_index : インデックス付きでループ処理のメソッドを実行する"
+  example "last : 最後の要素を返す" do
+    expect([1, 2, 3].last).to eq 3
+  end
 
-  example "join : 配列を1つの文字列として返す"
+  example "sample : 任意の要素を返す" do
+    array = [1, 2, 3, 4, 5]
+    expect(array).to include array.sample
+  end
 
-  example "max/max_by : 最大の要素を返す"
+  example "with_index : インデックス付きでループ処理のメソッドを実行する" do
+    array = [0, 1, 2, 3]
+    array.each.with_index do |num, index|
+      expect(num).to eq index
+    end
+
+    a = array.map.with_index do |num, index|
+      num * index
+    end
+    expect(a).to eq [0, 1, 4, 9]
+  end
+
+  example "join : 配列を1つの文字列として返す" do
+    expect(["a", "b", "c"].join('-')).to eq 'a-b-c'
+  end
+
+  example "max/max_by : 最大の要素を返す" do
+    hexes = [-3, -2, -1]
+    expect(hexes.max).to eq -1
+    expect(hexes.max_by(&:abs)).to eq -3
+  end
   
-  example "max/max_by : 最大の要素を返す"
-  
-  example "min/min_by : 最小の要素を返す"
-
+  example "min/min_by : 最小の要素を返す" do
+    hexes = [-3, -2, -1]
+    expect(hexes.min).to eq -3
+    expect(hexes.min_by(&:abs)).to eq -1
+  end
   
   
 end
