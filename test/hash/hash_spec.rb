@@ -24,13 +24,13 @@ describe Hash do
     expect(hash.has_value?("missing_value")).to be_falsey
   end
 
-  example "デフォルト値を設定する" do
+  example "new(value) / Hash#default : デフォルト値を設定する" do
     h = Hash.new("missing")
     expect(h.default).to eq "missing"
     expect(h[:missing_key]).to eq "missing"
   end
 
-  example "デフォルト値としてブロックを設定する" do
+  example "new(&block) : デフォルト値としてブロックを設定する" do
     h = Hash.new do |slf, key|
       slf[key] = "hoge"
     end
@@ -39,7 +39,17 @@ describe Hash do
     expect(h.has_key?(:missing_key)).to be_truthy
   end
 
-  example "fetch : キーに対する値を取得する。キーが見つからなければ指定された値を返す。" do
+  example "デフォルト値を利用してvalueを追加・更新する" do
+    h = Hash.new do |slf, key|
+      slf[key] = []
+    end
+    expect(h[:key1]).to eq []
+    expect(h[:key1] << 1).to eq [1]
+    expect(h[:key1] << 2).to eq [1, 2]
+    expect(h[:key2] << 3).to eq [3]
+  end
+
+  example "Fetch : キーに対する値を取得する。キーが見つからなければ指定された値を返す。" do
     v = hash.fetch(:missing_key, "hoge")
     expect(v).to eq "hoge"
   end
